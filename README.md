@@ -105,25 +105,6 @@ $ touch .babelrc
 },
 ```
 
-## GraphQL codegen
-
-```shell
-$ yarn graphql-codegen init && yarn
-$ mkdir queries && cd queries && touch queries.ts && cd ..
-```
-
-```shell:init
-? What type of application are you building? Application built with React
-? Where is your schema?: (path or url) https://next-graphql-app.hasura.app/v1/graphql
-? Where are your operations and fragments?: queries/**/*.ts
-? Pick plugins: TypeScript (required by other typescript plugins), TypeScript Operations (operations and fragments), TypeScript Reac
-t Apollo (typed components and HOCs)
-? Where to write the output: types/generated/graphql.tsx
-? Do you want to generate an introspection file? No
-? How to name the config file? codegen.yml
-? What script in package.json should run the codegen? gen-types
-```
-
 ## Test 動作確認
 
 ```shell
@@ -140,4 +121,25 @@ it('Should render title text', () => {
   render(<Home />)
   expect(screen.getByText('Next.js!')).toBeInTheDocument()
 })
+```
+
+## Generate GraphQL schema
+
+```shell
+$ yarn graphql-codegen init && yarn
+$ mkdir queries && cd queries && touch queries.ts && cd ..
+# queries.tsに定義を記述後、下記を実行
+$ yarn gqlgen
+```
+
+```shell:init
+? What type of application are you building? Application built with React
+? Where is your schema?: (path or url) https://next-graphql-app.hasura.app/v1/graphql
+? Where are your operations and fragments?: queries/**/*.ts
+? Pick plugins: TypeScript (required by other typescript plugins), TypeScript Operations (operations and fragments), TypeScript Reac
+t Apollo (typed components and HOCs)
+? Where to write the output: types/generated/graphql.tsx
+? Do you want to generate an introspection file? No
+? How to name the config file? codegen.yml
+? What script in package.json should run the codegen? gen-types
 ```
