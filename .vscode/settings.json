@@ -1,0 +1,14 @@
+{
+  "git.ignoreLimitWarning": true,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "[json]": {
+    "editor.tabSize": 2
+  },
+  "[javascript]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // "eslint.validate": ["javascript", "javascriptreact"],
+  "javascript.format.enable": false
+}

@@ -5,15 +5,63 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest --env=jsdom --verbose",
+    "gqlgen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.6",
+    "@apollo/react-hooks": "^4.0.0",
+    "@heroicons/react": "^1.0.5",
+    "autoprefixer": "^10.4.2",
+    "cross-fetch": "^3.1.4",
+    "graphql": "^16.2.0",
     "next": "12.0.7",
+    "postcss": "^8.4.5",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "tailwindcss": "^3.0.12"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "@graphql-codegen/cli": "2.3.1",
+    "@graphql-codegen/typescript": "2.4.2",
+    "@graphql-codegen/typescript-operations": "2.2.2",
+    "@graphql-codegen/typescript-react-apollo": "3.2.3",
+    "@testing-library/dom": "^8.11.1",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.8",
+    "@types/react": "^17.0.38",
+    "babel-jest": "^27.4.6",
     "eslint": "8.6.0",
-    "eslint-config-next": "12.0.7"
+    "eslint-config-next": "12.0.7",
+    "jest": "^27.4.7",
+    "jest-css-modules": "^2.1.0",
+    "msw": "0.35.0",
+    "next-page-tester": "^0.30.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/.next/",
+      "<rootDir>/node_modules/"
+    ],
+    "moduleNameMapper": {
+      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
+    }
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "printWidth": 150,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "trailingComma": "es5",
+    "arrowParens": "always",
+    "jsxBracketSameLine": false
   }
 }

@@ -1,34 +1,143 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js + GraphQL + Hasura Application
 
-## Getting Started
+- Node 14.17.0
+- TypeScript 4.5.4
+- Next.js 12.0.7
+- TailwindCSS 3.0.12
+- GraphQL 16.2.0
+- ApollClient 3.5.6
 
-First, run the development server:
+## Create Project
 
-```bash
-npm run dev
-# or
-yarn dev
+### Install
+
+```shell
+# Create project
+$ npx create next-app next-graphql-app
+
+# Apollo Client
+$ yarn add @apollo/client graphql @apollo/react-hooks cross-fetch @heroicons/react
+
+# React-Testing-Library + MSW + next-page-tester
+$ yarn add -D msw@0.35.0 next-page-tester jest @testing-library/react @types/jest @testing-library/jest-dom @testing-library/dom babel-jest @babel/core @testing-library/user-event jest-css-modules prettier
+
+# TypeScript
+$ yarn add -D typescript @types/react @types/node
+
+# TailwindCSS
+$ yarn add tailwindcss@latest postcss@latest autoprefixer@latest
+
+# GraphQL
+$ yarn add -D @graphql-codegen/cli @graphql-codegen/typescript
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### TypeScript
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- yarn dev 実行で自動的に設定が記述される
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```shell
+$ touch tsconfig.json
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### TailwindCSS(v3.0.0〜)
 
-## Learn More
+```shell
+# tailwind.config.js, postcss.config.js生成
+$ npx tailwindcss init -p
+```
 
-To learn more about Next.js, take a look at the following resources:
+```js:tailwind.config.js
+module.exports = {
+  // 追加
+   content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+  ],
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```css:global.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### .babelrc
 
-## Deploy on Vercel
+```shell
+$ touch .babelrc
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```json
+{
+  "presets": ["next/babel"]
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Package.json
+
+- jest の記述
+- prettier の記述
+
+```json
+"scripts": {
+  ...
+  "test": "jest --env=jsdom --verbose"
+},
+"jest": {
+  "testPathIgnorePatterns": [
+    "<rootDir>/.next/",
+    "<rootDir>/node_modules/"
+  ],
+  "moduleNameMapper": {
+    "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
+  }
+},
+"prettier": {
+  "tabWidth": 2,
+  "printWidth": 150,
+  "semi": false,
+  "singleQuote": true,
+  "bracketSpacing": true,
+  "trailingComma": "es5",
+  "arrowParens": "always",
+  "jsxBracketSameLine": false
+},
+```
+
+## GraphQL codegen
+
+```shell
+$ yarn graphql-codegen init && yarn
+$ mkdir queries && cd queries && touch queries.ts && cd ..
+```
+
+```shell:init
+? What type of application are you building? Application built with React
+? Where is your schema?: (path or url) https://next-graphql-app.hasura.app/v1/graphql
+? Where are your operations and fragments?: queries/**/*.ts
+? Pick plugins: TypeScript (required by other typescript plugins), TypeScript Operations (operations and fragments), TypeScript Reac
+t Apollo (typed components and HOCs)
+? Where to write the output: types/generated/graphql.tsx
+? Do you want to generate an introspection file? No
+? How to name the config file? codegen.yml
+? What script in package.json should run the codegen? gen-types
+```
+
+## Test 動作確認
+
+```shell
+$ mkdir __tests__
+$ cd __tests__ && touch Home.test.tsx && cd ..
+```
+
+```ts:__test__/Home.test.tsx
+import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
+import Home from '../pages/index'
+
+it('Should render title text', () => {
+  render(<Home />)
+  expect(screen.getByText('Next.js!')).toBeInTheDocument()
+})
+```
